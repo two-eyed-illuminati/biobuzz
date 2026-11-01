@@ -6,6 +6,7 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.ivy.Scheduler;
 import com.qualcomm.hardware.lynx.LynxModule;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -13,6 +14,7 @@ import com.pedropathing.math.Pose;
 import com.pedropathing.api.PoseFactory;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.utils.mechanism.ContinuousMotorMechanism;
 import org.firstinspires.ftc.teamcode.utils.pedro.Constants;
 
 import java.util.ArrayList;
@@ -32,6 +34,8 @@ public class Robot{
   private static List<LynxModule> hubs = new ArrayList<>();
   private static HardwareMap hardwareMap;
   private static Telemetry dsTelemetry;
+
+  public static ContinuousMotorMechanism pollenShooter;
   
   //Stored Values
   public enum Alliance{
@@ -65,6 +69,9 @@ public class Robot{
     for (LynxModule hub : hubs) {
       hub.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
     }
+
+    DcMotorEx pollenShooterMotor = hardwareMap.get(DcMotorEx.class, "pollenShooter");
+    pollenShooter = new ContinuousMotorMechanism(pollenShooterMotor, 0, 0, new Controller(0, 0, 0));
 
     if(initialized) {
       //Do things like setting motor zero power behavior, direction, etc.
