@@ -70,8 +70,8 @@ public class Robot{
       hub.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
     }
 
-    DcMotorEx pollenShooterMotor = hardwareMap.get(DcMotorEx.class, "pollenShooter");
-    pollenShooter = new ContinuousMotorMechanism(pollenShooterMotor, 0, 0, new Controller(0, 0, 0));
+//    DcMotorEx pollenShooterMotor = hardwareMap.get(DcMotorEx.class, "pollenShooter");
+//    pollenShooter = new ContinuousMotorMechanism(pollenShooterMotor, 0, 0, new Controller(0, 0, 0));
 
     if(initialized) {
       //Do things like setting motor zero power behavior, direction, etc.

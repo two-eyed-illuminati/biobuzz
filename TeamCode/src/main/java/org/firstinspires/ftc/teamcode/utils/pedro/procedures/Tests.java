@@ -180,15 +180,34 @@ class TestsLine extends TuningOpMode<Boolean> {
         follower.update();
         follower.follow(path1);
 
+        ElapsedTime legTimer = new ElapsedTime();
+        int legs = 0;
+        double totalSeconds = 0;
+        double fastestSeconds = Double.MAX_VALUE;
+        double slowestSeconds = 0;
+
         while (opModeIsActive()) {
             follower.update();
             if (follower.atParametricEnd()) {
+                double legSeconds = legTimer.seconds();
+                legs++;
+                totalSeconds += legSeconds;
+                fastestSeconds = Math.min(fastestSeconds, legSeconds);
+                slowestSeconds = Math.max(slowestSeconds, legSeconds);
+
+                telemetry.addData("Legs", legs);
+                telemetry.addData("Last leg (s)", "%.3f", legSeconds);
+                telemetry.addData("Mean / fastest / slowest (s)", "%.3f / %.3f / %.3f", totalSeconds / legs, fastestSeconds, slowestSeconds);
+                telemetry.addData("Pose", follower.pose());
+                telemetry.update();
+
                 if (forward) {
                     follower.follow(path2);
                 } else {
                     follower.follow(path1);
                 }
                 forward = !forward;
+                legTimer.reset();
             }
         }
         return true;
