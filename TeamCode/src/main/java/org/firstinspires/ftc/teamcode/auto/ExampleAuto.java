@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.auto;
 
 import static com.pedropathing.api.Paths.curve;
 import static com.pedropathing.api.Paths.line;
+import static com.pedropathing.api.Paths.path;
+import static com.pedropathing.api.Paths.through;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
@@ -18,14 +20,26 @@ public final class ExampleAuto extends AutoOpMode {
     }
 
     public static AutoBuilder createRoutine(Follower follower) {
-        Pose start = Robot.START_POSE_CORNER;
+        Pose start = new Pose(110, 132, 3*Math.PI/2);
 
         // Example of a "Tweak" - meant to be used for last-minute emergency tweaks to auto
         AutoBuilder.GoToCenter gtcConfig = new AutoBuilder.GoToCenter();
-        gtcConfig.endPose = new Pose(72, 72, Math.PI/2);
+        gtcConfig.endPose = new Pose(80, 72, Math.PI/2);
+
+        Pose bottomRight = new Pose(100, 24, 3*Math.PI/2);
+        Pose bottomRightCtrl = new Pose(140, 0, 3*Math.PI/2);
+        Pose bottomLeft = new Pose(40, 32, 3*Math.PI/2);
+
+        Pose topLeft = new Pose(30, 95, Math.PI);
+
+        Pose end = new Pose(90, 110, Math.PI);
 
         return new AutoBuilder(follower)
                 .startAt(start)
-                .goToCenter(gtcConfig);
+                .followPath(
+                        through(
+                                start, bottomRight, bottomLeft, topLeft, end
+                        ).linear(start, topLeft)
+                );
     }
 }
