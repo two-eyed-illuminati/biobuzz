@@ -19,7 +19,7 @@ public class Tuning {
     }
     @Tuner
     public static Procedure pinpointTuner() {
-        return new PinpointTuner();
+        return new PinpointTuner(hardwareMap -> new Mecanum(hardwareMap, Constants.drivetrainConfig));
     }
     @Tuner
     public static Procedure foresightTuner() {

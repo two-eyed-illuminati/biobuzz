@@ -83,4 +83,6 @@ lint/tmp/
 /.project
 /.classpath
 
+
 **/node_modules
+**/vite.config.d.ts
